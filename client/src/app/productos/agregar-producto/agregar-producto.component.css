@@ -1,0 +1,91 @@
+.pedido-container {
+  display: flex;
+  background-image: url("./../../../assets/img9.jpeg"); /* Ruta a tu imagen de fondo */
+  background-size: cover; /* Ajustar la imagen para cubrir todo el contenedor */
+  background-position: center;
+  background-attachment: fixed; /* Fijar la imagen de fondo */
+  height: 100%;
+}
+
+.pedido-form {
+  margin: 0 auto;
+  padding: 20px;
+  border: 1px solid rgb(238, 6, 6);
+  border-radius: 5px;
+  background-color: #ffffff;
+}
+
+label {
+  display: block;
+  margin-bottom: 5px;
+}
+
+input[type="text"],
+input[type="number"],
+select {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+.productos-seleccionados {
+  margin-top: 20px;
+}
+
+.productos-seleccionados h3 {
+  margin-bottom: 10px;
+}
+
+.nota-multiline {
+  white-space: pre-wrap;
+}
+
+button[type="submit"],
+button[type="button"] {
+  display: block;
+  width: 100%;
+  padding: 10px;
+  background-color: #fd0101; /* Rojo */
+  background: linear-gradient(
+    to right,
+    #ffe108,
+    #fd0101,
+    #ffe108
+  ); /* Degradado de izquierda a derecha */
+  border: none;
+  border-radius: 15px;
+  cursor: pointer;
+  color: #fff; /* Texto blanco */
+  -webkit-text-stroke-width: 2px;
+  -webkit-text-stroke-color: black;
+  font-weight: bold;
+  font-style: italic;
+  font-size: xx-large;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  transition: background-color 0.3s ease; /* Transición de color de fondo */
+}
+
+button {
+  display: block;
+  width: 100%;
+  padding: 10px;
+  background-color: #fd0101; /* Rojo */
+  background: linear-gradient(
+    to right,
+    #fd0101,
+    #ffffff
+  ); /* Degradado de izquierda a derecha */
+  border: none;
+  border-radius: 15px;
+  cursor: pointer;
+  color: #fff; /* Texto blanco */
+  -webkit-text-stroke-width: 2px;
+  -webkit-text-stroke-color: black;
+  font-weight: bold;
+  font-style: italic;
+  font-size: xx-large;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  transition: background-color 0.3s ease; /* Transición de color de fondo */
+}

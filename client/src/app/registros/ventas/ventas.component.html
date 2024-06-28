@@ -1,0 +1,39 @@
+<div class="menu-container">
+    <div style="background-color: black;" class="content">
+      <div class="background-image"></div>
+      <div  class="cliente-form">
+            <div class="filtro">
+              <select [(ngModel)]="selectedConsulta">
+                <option value="getTotal">Obtener total ventas</option>
+                <option value="getTotalTipo">Obtener total por tipo producto</option>
+                <option value="getTotalProducto">Obtener total de cada producto</option>
+                <option value="getTotalMesa">Obtener total de cada mesa</option>
+                <option value="getTotalTipoPedido">Obtener total por tipo pedido</option>
+              </select>
+              <input type="date" [(ngModel)]="fechaInicio"> - <input type="date" [(ngModel)]="fechaFin">
+              <button (click)="obtenerDatos()">Obtener datos</button>
+            </div>
+            <table>
+              <thead>
+                <tr>
+                  <th>Nombre</th>
+                  <th>Cantidad</th>
+                  <th>Total</th>
+                </tr>
+              </thead>
+              <tbody style="background-color: white;">
+                <tr  *ngFor="let item of registros">
+                  <td>{{ item.nombre }}</td>
+                  <td>{{ item.cantidad }}</td>
+                  <td>{{ item.total }}</td>
+                </tr>
+                <tr>
+                  <td *ngIf="total!= null" > <P>EL TOTAL DE LOS PEDIDOS VENDIDOS ES: {{ total }}</P>
+                    <P>EN NEQUI: {{nequi}}</P>  
+                    <P>BANCOLOMBIA: {{bancolombia}} EFECTIVO: {{efectivo}}</P></td>
+                </tr>
+              </tbody>
+            </table>
+      <button (click)="navigateTo('registros')" class="regresarbtn">Regresar</button>
+    </div>
+  </div>

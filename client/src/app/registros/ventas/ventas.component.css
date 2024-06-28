@@ -1,0 +1,289 @@
+.menu-container {
+  background-color: #000000; /* Fondo negro */
+  height: 100%;
+}
+
+.cliente-form {
+  width: 80%;
+  margin: auto auto;
+  padding: 20px;
+  background-color: rgba(0, 0, 0, 0.5); /* Capa de color negro traslúcido */
+  border-radius: 10px;
+  position: relative; /* Agregamos posición relativa para que la imagen de fondo se ajuste a este contenedor */
+  z-index: 1; /* Aseguramos que este contenedor esté encima de la imagen de fondo */
+  text-align: center; /* Centrar el texto */
+  align-items: center;
+  align-content: center;
+}
+
+.cliente-form h2 {
+  color: #fff; /* Texto blanco */
+  text-align: center; /* Centrar el texto */
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+label {
+  color: #fff; /* Texto blanco */
+}
+
+input[type="text"],
+input[type="date"] {
+  width: 100%;
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  background-color: #fff; /* Fondo blanco */
+  color: #000; /* Texto negro */
+}
+
+
+
+.background-image {
+  position: fixed; /* Fijar la imagen de fondo */
+  top: 0;
+  left: 15%;
+  width: 70%;
+  height: 100%;
+  z-index: 0; /* Aseguramos que la imagen de fondo esté detrás de todo */
+  background-image: url("../../../assets/logo.jpeg"); /* Ruta de la imagen de fondo */
+  background-size: cover;
+  background-position: center;
+  filter: brightness(50%); /* Reducir el brillo de la imagen para oscurecerla */
+}
+
+input[type="text"],
+input[type="date"] {
+  width: 100%;
+  max-width: 300px; /* Se agrega esta propiedad para limitar el ancho */
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  background-color: #fff; /* Fondo blanco */
+  color: #000; /* Texto negro */
+}
+
+button {
+  display: block;
+
+  margin-bottom: 20px; /* Rojo */
+  background: linear-gradient(
+    to right,
+    #ffe108,
+    #fd0101,
+    #ffe108
+  ); /* Degradado de izquierda a derecha */
+  border: none;
+  border-radius: 15px;
+  cursor: pointer;
+  color: #fff; /* Texto blanco */
+  -webkit-text-stroke-width: 2px;
+  -webkit-text-stroke-color: black;
+  font-weight: bold;
+  font-style: italic;
+  font-size: xx-large;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  transition: background-color 0.3s ease; /* Transición de color de fondo */
+}
+
+button:hover {
+  background-color: #c45f40; /* Rojo oscuro en el hover */
+}
+
+.button-gradient {
+  background: linear-gradient(to right, #ffe108, #fd0101); /* Degradado */
+  transition: background 0.5s ease;
+}
+
+.button-gradient:hover {
+  background: linear-gradient(
+    to right,
+    #fd0101,
+    #ffe108
+  ); /* Degradado invertido en el hover */
+}
+
+input[type="password"] {
+  width: 100%;
+  max-width: 300px;
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  background-color: #fff;
+  color: #000;
+}
+
+select {
+  width: 100%;
+  max-width: 300px;
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  background-color: #fff;
+  color: #000;
+}
+
+@media screen and (max-width: 650px) {
+  .background-image {
+    position: fixed; /* Fijar la imagen de fondo */
+    top: 20%;
+    left: 0;
+    width: 100%;
+    height: 50%;
+  }
+}
+
+.user-table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: white;
+}
+
+.user-table th, .user-table td {
+  border: 1px solid black;
+  padding: 6px; /* Se ajustó el padding a un valor más pequeño */
+  text-align: left;
+}
+
+
+.editar-button {
+  background-color: yellow;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  cursor: pointer;
+  border-radius: 4px;
+  width: 100%;
+}
+
+.desactivar-button {
+  background-color: orange;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  cursor: pointer;
+  border-radius: 4px;
+  width: 100%;
+}
+.regresarbtn {
+  width: 100%;
+  padding: 20px;
+  background-color: #fd0101;
+}
+
+.contenido-modal {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.modal-footer{
+  padding: 10px;
+}
+
+.modal-footer button {
+  float: right;
+  margin-left: 5px;
+}
+
+.pedido-null {
+  background-color: rgb(239, 104, 104);
+}
+
+.pedido-1 {
+  background-color: yellow;
+}
+
+.pedido-2 {
+  background-color: rgb(239, 104, 104);
+}
+
+.pedido-3 {
+  background-color: rgb(69, 245, 69);
+}
+
+.fa-trash-alt {
+  color: rgb(250, 86, 86); /* Cambia el color a rojo */
+  font-size: 20px;
+}
+
+.contenido-modal {
+  padding: 20px;
+}
+
+.header {
+  font-size: 24px;
+  text-align: center;
+}
+
+.separator {
+  margin: 10px 0;
+}
+
+.pedido-details {
+  margin-bottom: 20px;
+}
+
+.detalles-pedido {
+  margin-left: 20px;
+}
+
+.imprimir-button {
+  background-color: green;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  cursor: pointer;
+  margin-right: 10px;
+}
+
+.cancelar-button {
+  background-color: red;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  cursor: pointer;
+}
+
+
+  /* Estilos para la tabla */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+  }
+
+  /* Estilos para las celdas del encabezado */
+  th {
+    background-color: #f2f2f2;
+    border: 1px solid #dddddd;
+    padding: 8px;
+    text-align: left;
+  }
+
+  /* Estilos para las celdas de datos */
+  td {
+    border: 1px solid #dddddd;
+    padding: 8px;
+  }
+
+  /* Estilos para la fila de total */
+  tr.total {
+    font-weight: bold;
+  }
+
+  /* Estilos alternados para las filas */
+  tr:nth-child(even) {
+    background-color: #ffffff;
+  }
+
+  /* Estilos para el texto de color rojo en el total */
+  .total {
+    color: red;
+  }
+
+  .black-bg {
+    background-color: black;
+  }

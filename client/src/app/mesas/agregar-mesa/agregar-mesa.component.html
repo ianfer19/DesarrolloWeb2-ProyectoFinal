@@ -1,0 +1,31 @@
+<div class="menu-container">
+  <div class="menu">
+    <!-- Menú aquí -->
+  </div>
+  <div class="content">
+    <div class="background-image"></div>
+    <div class="cliente-form">
+      <h2>Registrar Nueva Mesa</h2>
+      <form (ngSubmit)="registrarMesa()">
+        <div class="form-group">
+          <label for="nombre">Nombre:</label>
+          <input
+            type="text"
+            id="nombre"
+            name="nombre"
+            [(ngModel)]="mesa.nombre"
+            required
+          />
+        </div>
+        <br />
+        <button type="submit">Registrar Mesa</button>
+      </form>
+      <button
+        (click)="navigateTo('mesas')"
+        style="background: linear-gradient(to left, #ffffff, #fd0101, #ffffff)"
+      >
+        Regresar
+      </button>
+    </div>
+  </div>
+</div>

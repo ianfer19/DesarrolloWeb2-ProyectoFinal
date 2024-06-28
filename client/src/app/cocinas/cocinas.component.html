@@ -1,0 +1,65 @@
+<div class="menu-container">
+  <div class="menu">
+      <!-- Menú aquí -->
+  </div>
+  <div class="content">
+      <div class="background-image"></div>
+      <div class="cliente-form">
+          <table class="user-table">
+              <thead style="background-color: black;">
+                  <tr style="color: white;">
+                      <th>Cliente</th>
+                      <th>Mesa</th>
+                      <th>Tipo</th>
+                      <th>Total</th>
+                      <th>Estado</th>
+                  </tr>
+              </thead>
+              <tbody>
+                <ng-container *ngFor="let pedido of pedidos">
+                    <tr style="height: 30px; padding-top: 10px;">
+                        <td>{{ pedido.nombre_cliente }}</td>
+                        <td>{{ pedido.id_mesa }}</td>
+                        <td>{{ pedido.tipo_pedido }}</td>
+                        <td>{{ pedido.total_pedido }}</td>
+                        <td>
+                            <!-- Mostrar el botón "Terminado" solo si el estado del pedido es nulo -->
+                            <button *ngIf="!pedido.estado" class="editar-button" (click)="editar(pedido)" (click)="cambiarEstado(pedidosForm)">Terminado</button>
+                        </td>
+                    </tr>
+                    <!-- Subtabla para detalles del pedido -->
+                    <tr>
+                        <td colspan="5">
+                            Contenido del pedido:
+                            <table>
+                                <thead>
+                                    <tr style="background-color: white;">
+                                        <th>Nombre Producto</th>
+                                        <th>Cantidad</th>
+                                        <th>Nota</th>
+                                        <th>Subtotal</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <ng-container *ngIf="detallesPedido && detallesPedido[pedido.id_pedido]">
+                                        <tr *ngFor="let detalle of detallesPedido[pedido.id_pedido]">
+                                            <td>{{ detalle.nombre_producto }}</td>
+                                            <td>{{ detalle.cantidad }}</td>
+                                            <td>{{ detalle.nota }}</td>
+                                            <td>subtotal: {{ detalle.subtotal }}</td>
+                                        </tr>
+                                    </ng-container>
+                                </tbody>
+                            </table>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="color: red;background-color: black; " colspan="5;">FINAL PEDIDO {{pedido.id_pedido}}</td>
+                    </tr>
+                </ng-container>
+            </tbody>
+        </table>
+        <button (click)="navigateTo('cocinasMenu')" class="regresarbtn">Regresar</button>
+    </div>
+</div>
+</div>

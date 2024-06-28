@@ -1,0 +1,77 @@
+<div class="menu-container">
+    <div class="menu">
+      <!-- Menú aquí -->
+    </div>
+    <div  class="content">
+      <div class="background-image"></div>
+      <div class="cliente-form">
+        <table class="user-table">
+            <thead style="background-color: black;">
+              <tr style="color: white;">
+                <th>Nombre</th>
+                <th>Tipo</th>
+                <th>Usuario</th>
+                <th></th>
+                <th>Estado</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr style="height: 30px;" *ngFor="let user of users">
+                <td>{{ user.nombre }}</td>
+                <td>{{ user.tipo }}</td>
+                <td style="display: none;">{{ user.contrasena }}</td>
+                <td>{{ user.usuario }}</td>
+                <td style="display: none;">{{ user.id_usuario }}</td>
+                <td style="display: none;">{{ user.estado }}</td>
+                    <td>
+                        <button class="editar-button" (click)="showModal = true" (click)="editar(user)">Editar</button>
+                      </td>
+                      <td>
+                        <button *ngIf="user.fechaeliminacion === null" class="desactivar-button"(click)="desactivarUsuario(user.id_usuario)" >Desactivar</button>
+                        <button *ngIf="user.fechaeliminacion !=null" class="activar-button" (click)="activarUsuario(user.id_usuario)">Activar</button>
+                      </td>
+              </tr>
+            </tbody>
+          </table>
+        <button
+          (click)="navigateTo('usuarios')"
+          style="background: linear-gradient(to left, #ffffff, #fd0101, #ffffff), "
+          class="regresarbtn"
+        >
+          Regresar
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <app-modal style="align-items: center;" [showModal]="showModal" (closeModal)="cancelarEdicion()">
+              <!-- Campos de entrada para los datos editables del usuario -->
+
+    <div class="contenido-modal">
+    <!-- Para el enlace de entrada -->
+    <label style="color:black;">Nombre</label>
+    <input type="text" [ngModel]="myForm.get('nombre')?.value" (ngModelChange)="myForm.get('nombre')?.setValue($event)" name="nombre">
+
+    <!-- Campo Usuario -->
+    <label style="color:black;">Tipo</label>
+    <input type="text" [ngModel]="myForm.get('tipo')?.value" (ngModelChange)="myForm.get('tipo')?.setValue($event)" name="tipo">
+
+    <!-- Campo Tipo -->
+    <label style="color:black;">Usuario</label>
+    <input type="text" [ngModel]="myForm.get('usuario')?.value" (ngModelChange)="myForm.get('usuario')?.setValue($event)" name="usuario">
+
+
+    <div class="modal-footer">
+
+      <button mat-icon type="submit" class="save-exit" (click)="editarUsuario(myForm)" [disabled]="myForm.invalid">
+        <abbr title="Guardar">Guardar</abbr>
+      </button>
+      <button (click)="cancelarEdicion()" class="close" type="button">
+        Cancelar
+      </button>
+    </div>
+    </div>
+
+
+
+  </app-modal>

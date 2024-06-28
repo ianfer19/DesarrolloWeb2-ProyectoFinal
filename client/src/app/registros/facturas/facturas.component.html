@@ -1,0 +1,146 @@
+<div class="menu-container">
+    <div class="menu">
+      <!-- Menú aquí -->
+    </div>
+    <div class="content">
+      <div class="background-image"></div>
+      <div class="cliente-form">
+        <table class="user-table">
+          <thead style="background-color: black; color: white;">
+            <tr>
+              <th>Fecha</th>
+              <th>ID Pedido</th>
+              <th>Nombre empleado</th>
+              <th>Descuento (%)</th>
+              <th>Descuento (Valor)</th>
+              <th>Total</th>
+              <th>Fecha Eliminación</th>
+              <th>Contenido del pedido</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let factura of facturas">
+              <td>{{ factura.fecha_factura }}</td>
+              <td>{{ factura.id_pedido }}</td>
+              <td>{{ factura.nombre_empleado }}</td>
+              <td>{{ factura.descuento_por }}</td>
+              <td>{{ factura.adescuento_val }}</td>
+              <td>{{ factura.total_factura }}</td>
+              <td>{{ factura.fechaeliminacion }}</td>
+              <td> <button style="width: 160px; height: 50px; font-size: 30px;" 
+                (click)="leerPedidos(factura.id_pedido); leerFacturaPorIdPedido(factura.id_pedido);showModalContenido=true">Ver</button>
+              </td>
+              <td> Eliminar                 <i
+                style="font-size: 30px"
+                  class="fas fa-trash-alt"
+                ></i></td>
+            </tr>
+          </tbody>
+        </table>
+        <button (click)="navigateTo('facturas')" class="regresarbtn">Regresar</button>
+      </div>
+    </div>
+  </div>
+  
+  <app-modal [showModal]="showModal" (closeModal)="cancelarEdicion()">
+    <!-- Campos de entrada para los datos editables de la factura -->
+    <div class="contenido-modal">
+      <!-- Campo Fecha -->
+      <input type="text" [ngModel]="myForm.get('fecha_factura')?.value" (ngModelChange)="myForm.get('fecha_factura')?.setValue($event)" name="fecha_factura">
+      <!-- Campo ID Pedido -->
+      <input type="text" [ngModel]="myForm.get('id_pedido')?.value" (ngModelChange)="myForm.get('id_pedido')?.setValue($event)" name="id_pedido">
+      <!-- Campo ID Empleado -->
+      <input type="text" [ngModel]="myForm.get('id_empleado')?.value" (ngModelChange)="myForm.get('id_empleado')?.setValue($event)" name="id_empleado">
+      <!-- Campo Descuento (%) -->
+      <input type="text" [ngModel]="myForm.get('descuento_por')?.value" (ngModelChange)="myForm.get('descuento_por')?.setValue($event)" name="descuento_por">
+      <!-- Campo Descuento (Valor) -->
+      <input type="text" [ngModel]="myForm.get('adescuento_val')?.value" (ngModelChange)="myForm.get('adescuento_val')?.setValue($event)" name="adescuento_val">
+      <!-- Campo Total -->
+      <input type="text" [ngModel]="myForm.get('total_factura')?.value" (ngModelChange)="myForm.get('total_factura')?.setValue($event)" name="total_factura">
+      <!-- Campo Fecha Eliminación -->
+      <input type="text" [ngModel]="myForm.get('fechaeliminacion')?.value" (ngModelChange)="myForm.get('fechaeliminacion')?.setValue($event)" name="fechaeliminacion">
+  
+      <div class="modal-footer">
+        <button mat-icon type="submit" class="save-exit" (click)="editarFactura(myForm)" [disabled]="myForm.invalid">
+          <abbr title="Guardar">Guardar</abbr>
+        </button>
+        <button (click)="cancelarEdicion()" class="close" type="button">
+          Cancelar
+        </button>
+      </div>
+    </div>
+  </app-modal>
+
+  <app-modal  [showModal]="showModalContenido" (closeModal)="cancelarEdicion()">
+    <ng-container *ngFor="let pedido of pedidoSeleccionado" >
+      <table class="user-table" style="border-radius: 5px; margin: 0 auto !important;">
+          <thead style="background-color: white">
+              <tr style="background-color: rgb(255, 106, 0);">
+                  <td style="color: rgb(255, 255, 255); margin-bottom: 50px; font-size: 20px;  justify-content: center; text-align: center;" colspan="5;">
+                      PEDIDO {{ pedido.id_pedido }}
+                  </td>
+                  <td style="color: rgb(255, 255, 255); margin-bottom: 50px; font-size: 20px;  justify-content: center; text-align: center;" ></td>
+                  <td style="color: rgb(255, 255, 255); margin-bottom: 50px; font-size: 20px;  justify-content: center; text-align: center;" ></td>
+                  
+              </tr>
+              <tr style="color: rgb(0, 0, 0)">
+                  <th>Cliente</th>
+                  <th>Mesa</th>
+                  <th>Tipo</th>
+                  <th>Total</th>
+                  <th>Nequi</th>
+                  <th>Bancolombia</th>
+                  <th>Efectivo</th>
+              </tr>
+          </thead>
+          <tbody>
+              <tr style="height: 30px; padding-top: 10px; margin-top: 50px; ">
+                  <td style="display: none">{{ pedido.id_pedido }}</td>
+                  <td>{{ pedido.nombre_cliente }}</td>
+                  <td>{{  pedido.id_mesa }}</td>
+                  <td>{{ pedido.tipo_pedido }}</td>
+                  <td>{{ pedido.total_pedido }}</td>
+                  <ng-container *ngFor="let factura of facturaSeleccionada">
+                      <td> {{factura.nequi}}</td>
+                      <td>{{factura.bancolombia}}</td>
+                      <td>{{factura.efectivo}}</td>
+                  </ng-container>
+              </tr>
+              <tr></tr>
+              <tr>
+                  <td colspan="10">
+                      Contenido del pedido:
+                      <table>
+                          <thead>
+                              <tr style="background-color: white">
+                                  <th>Nombre Producto</th>
+                                  <th>Cantidad</th>
+                                  <th>Nota</th>
+                                  <th>Subtotal</th>
+                              </tr>
+                          </thead>
+                          <tbody>
+                              <ng-container *ngIf="detallesPedido && detallesPedido[pedido.id_pedido]">
+                                  <tr *ngFor="let detalle of detallesPedido[pedido.id_pedido]">
+                                      <td>{{ detalle.nombre_producto }}</td>
+                                      <td>{{ detalle.cantidad }}</td>
+                                      <td>{{ detalle.nota }}</td>
+                                      <td>subtotal: {{ detalle.subtotal }}</td>
+                                  </tr>
+                              </ng-container>
+                          </tbody>
+                      </table>
+                  </td>
+              </tr>
+          </tbody>
+      </table>
+  </ng-container>
+
+    <div >
+      <button style="margin: 20px auto; display: block;" (click)="cancelarEdicion()" class="close" type="button">
+        Cerrar
+      </button>
+    </div>
+
+  </app-modal>
+  

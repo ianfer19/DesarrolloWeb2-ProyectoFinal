@@ -1,0 +1,59 @@
+<div class="menu-container">
+  <div class="menu">
+    <!-- Menú aquí -->
+  </div>
+  <div class="content">
+    <div class="background-image"></div>
+    <div class="cliente-form">
+      <h2>Registrar Nuevo Usuario</h2>
+      <form (ngSubmit)="registrarUsuario()">
+        <div class="form-group">
+          <label for="nombre">Nombre: </label>
+          <input
+            type="text"
+            id="nombre"
+            name="nombre"
+            [(ngModel)]="usuario.nombre"
+            required
+          />
+        </div>
+        <div class="form-group">
+          <label for="usuario">Usuario: </label>
+          <input
+            type="text"
+            id="usuario"
+            name="usuario"
+            [(ngModel)]="usuario.usuario"
+            required
+          />
+        </div>
+        <div class="form-group">
+          <label for="pass">Contraseña: </label>
+          <input
+            type="password"
+            id="pass"
+            name="pass"
+            [(ngModel)]="usuario.contrasena"
+          />
+        </div>
+        <div class="form-group">
+          <label for="tipo">Tipo: </label>
+          <select id="tipo" name="tipo" [(ngModel)]="usuario.tipo" required>
+            <option value="Gerente">Gerente</option>
+            <option value="Empleado">Empleado</option>
+          </select>
+        </div>
+
+        <br />
+        <button type="submit">Registrar Usuario</button>
+      </form>
+
+      <button
+        (click)="navigateTo('usuarios')"
+        style="background: linear-gradient(to left, #ffffff, #fd0101, #ffffff)"
+      >
+        Regresar
+      </button>
+    </div>
+  </div>
+</div>

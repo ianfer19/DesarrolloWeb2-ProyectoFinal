@@ -1,0 +1,111 @@
+.menu-container {
+  display: flex;
+  background-color: #000000; /* Fondo negro */
+  height: 100%;
+}
+
+.menu {
+  width: 30%;
+  background: linear-gradient(
+    to right,
+    #c45f40,
+    #000000
+  ); /* Degradado de izquierda a derecha */
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+button {
+  display: block;
+  width: 100%;
+  padding: 20px;
+  margin-bottom: 20px;
+  background-color: #fd0101; /* Rojo */
+  background: linear-gradient(
+    to right,
+    #fd0101,
+    #ffffff
+  ); /* Degradado de izquierda a derecha */
+  border: none;
+  border-radius: 15px;
+  cursor: pointer;
+  color: #000000; /* Texto blanco */
+  font-weight: bold;
+  font-style: italic;
+  font-size: x-large;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  transition: background-color 0.3s ease; /* Transición de color de fondo */
+}
+
+button:hover {
+  background-color: #c45f40; /* Rojo oscuro en el hover */
+}
+
+.button-gradient {
+  background: linear-gradient(to right, #ffe108, #fd0101); /* Degradado */
+  transition: background 0.5s ease;
+}
+
+.button-gradient:hover {
+  background: linear-gradient(
+    to right,
+    #fd0101,
+    #ffe108
+  ); /* Degradado invertido en el hover */
+}
+
+/* Estilos base para el contenedor de la imagen */
+.content {
+  width: 100%;
+  padding: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  background-color: black;
+}
+
+/* Estilos para la imagen */
+.content-image {
+  max-width: 100%;
+  max-height: 645px; /* Tamaño máximo de altura */
+  width: auto;
+  height: auto;
+  background-color: black;
+}
+
+/* Media query para pantallas más pequeñas */
+@media screen and (max-width: 650px) {
+  .menu-container {
+    height: 100%;
+    flex-direction: column; /* Apila los elementos en columnas */
+    display: grid;
+  }
+
+  .menu {
+    order: 2;
+    width: 90%; /* Ocupa todo el ancho */
+    background: linear-gradient(to bottom, #000000, #c45f40);
+    padding: 5%;
+  }
+
+  .content {
+    width: 100%; /* Ocupa todo el ancho */
+    padding: 0%;
+  }
+
+  .content-image {
+    order: 2;
+    max-width: calc(
+      100% - 40px
+    ); /* Ajusta el ancho de la imagen restando el padding */
+    max-height: 300px; /* Altura máxima reducida */
+  }
+
+  .button {
+    font-size: 12px; /* Tamaño de fuente reducido */
+    margin-left: 10px;
+  }
+}

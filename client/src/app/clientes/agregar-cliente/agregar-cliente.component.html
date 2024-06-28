@@ -1,0 +1,73 @@
+<div class="menu-container">
+  <div class="menu">
+    <!-- Menú aquí -->
+  </div>
+  <div class="content">
+    <div class="background-image"></div>
+    <div class="cliente-form">
+      <h2>Registrar Nuevo Cliente</h2>
+      <form (ngSubmit)="registrarCliente()">
+        <div class="form-group">
+          <label for="cc">Cédula:</label>
+          <input
+            type="text"
+            id="cc"
+            name="cc"
+            (input)="onInput($event)"
+            [(ngModel)]="cliente.cc"
+            required
+            pattern="[0-9]{1,15}"
+          />
+        </div>
+        <div class="form-group">
+          <label for="nombre">Nombre:</label>
+          <input
+            type="text"
+            id="nombre"
+            name="nombre"
+            [(ngModel)]="cliente.nombre"
+            required
+          />
+        </div>
+        <div class="form-group">
+          <label for="telefono">Teléfono:</label>
+          <input
+            type="text"
+            id="telefono"
+            name="telefono"
+            (input)="onInput($event)"
+            [(ngModel)]="cliente.telefono"
+            pattern="[0-9]{1,15}"
+          />
+        </div>
+        <div class="form-group">
+          <label for="direccion">Dirección:</label>
+          <input
+            type="text"
+            id="direccion"
+            name="direccion"
+            [(ngModel)]="cliente.direccion"
+          />
+        </div>
+        <div class="form-group">
+          <label for="fechaNacimiento">Fecha de Nacimiento:</label>
+          <input
+            type="date"
+            id="fechaNacimiento"
+            name="fechaNacimiento"
+            [(ngModel)]="cliente.fechacumple"
+            required
+          />
+        </div>
+        <br />
+        <button type="submit">Registrar Cliente</button>
+      </form>
+      <button
+        (click)="navigateTo('clientes')"
+        style="background: linear-gradient(to left, #ffffff, #fd0101, #ffffff)"
+      >
+        Regresar
+      </button>
+    </div>
+  </div>
+</div>

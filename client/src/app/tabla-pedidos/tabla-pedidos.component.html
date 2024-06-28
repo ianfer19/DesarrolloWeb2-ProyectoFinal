@@ -1,0 +1,398 @@
+<div class="menu-container">
+  <div class="menu">
+    <!-- Menú aquí -->
+  </div>
+  <div class="content" style="background-color: black">
+    <div class="background-image"></div>
+    <ng-container  *ngFor="let pedido of pedidos" >
+    <div class="cliente-form">
+      <table class="user-table" style="border-radius: 5px">
+        <thead style="background-color: white">
+          <tr style="background-color: rgb(255, 106, 0);">
+            <td style="color: rgb(255, 255, 255); margin-bottom: 50px; font-size: 20px;  justify-content: center; text-align: center;" colspan="5;">
+              PEDIDO {{ pedido.id_pedido }}
+            </td>
+            <td style="background-color: rgb(255, 106, 0)"></td>
+          </tr>
+          <tr style="color: black">
+            <th>Cliente</th>
+            <th>Mesa</th>
+            <th>Tipo</th>
+            <th>Total</th>
+            <th>Estado</th>
+          </tr>
+        </thead>
+        <tbody>
+
+            <tr style="height: 30px; padding-top: 10px; margin-top: 50px; ">
+              <td style="display: none">{{ pedido.id_pedido }}</td>
+              <td>{{ pedido.nombre_cliente }}</td>
+              <td>{{  pedido.id_mesa }}</td>
+              <td>{{ pedido.tipo_pedido }}</td>
+              <td>{{ pedido.total_pedido }}</td>
+              <td  
+              [ngClass]="{
+                    'amarillo': filtrarFacturasPorPedido(pedido.id_pedido).length === 0,
+                'pedido-3': pedido.fechaeliminacion !== null
+              }"
+            >
+              <ng-container *ngIf="filtrarFacturasPorPedido(pedido.id_pedido).length === 0; else editarTemplate">
+                <i
+                  style="font-size: 40px"
+                  class="fas fa-receipt"
+                  (click)="editar(pedido); leerDetallePedidoSeleccionado(pedido.id_pedido); showModalFacturar = true"
+                ></i>
+                Facturar
+              </ng-container>
+              
+              <ng-template #editarTemplate>
+                <ng-container *ngFor="let factura of filtrarFacturasPorPedido(pedido.id_pedido)">
+                  <ng-container *ngIf="factura.nequi === 0 && factura.bancolombia === 0 && factura.efectivo === 0; else eliminarTemplate">
+                    <i
+                    style="font-size: 40px"
+                      class="fas fa-pencil-alt"
+                      (click)="idFactura(pedido.id_pedido, pedido.total_pedido); showModalFacturar2 = true"
+                    ></i>
+                    Editar factura
+                  </ng-container>
+                </ng-container>
+                <ng-template #eliminarTemplate>
+                  <i
+                  style="font-size: 40px"
+                    class="fas fa-trash-alt"
+                    (click)="editar(pedido); marcarComoEliminado(pedidosForm)"
+                  ></i>
+                  Eliminar
+                </ng-template>
+              </ng-template>
+            </td>
+            
+            
+            
+          
+            </tr>
+            <!-- Subtabla para detalles del pedido -->
+            <tr>
+              <td colspan="5">
+                Contenido del pedido:
+                <table>
+                  <thead>
+                    <tr style="background-color: white">
+                      <th>Nombre Producto</th>
+                      <th>Cantidad</th>
+                      <th>Nota</th>
+                      <th>Subtotal</th>
+                      <th
+                        *ngIf="pedido.fechaeliminacion == null"
+                        style="background-color: rgb(69, 245, 69)"
+                      >
+                        <i
+                          (click)="modal2Visible = true"
+                          (click)="editar(pedido)"
+                          class="fas fa-plus"
+                        ></i>
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <ng-container
+                      *ngIf="detallesPedido && detallesPedido[pedido.id_pedido]"
+                    >
+                      <tr
+                        *ngFor="let detalle of detallesPedido[pedido.id_pedido]"
+                      >
+                        <td>{{ detalle.nombre_producto }}</td>
+                        <td>{{ detalle.cantidad }}</td>
+                        <td>{{ detalle.nota }}</td>
+                        <td>subtotal: {{ detalle.subtotal }}</td>
+                        <td *ngIf="pedido.fechaeliminacion === null">
+                          <i
+                            (click)="editar(pedido)"
+                            (click)="editarDetallesPedidos(detalle)"
+                            (click)="
+                              restarTotal(pedidosForm, detallesPedidoForm)
+                            "
+                            class="fas fa-trash-alt"
+                          ></i>
+                        </td>
+                      </tr>
+                    </ng-container>
+                  </tbody>
+                </table>
+              </td>
+            </tr>
+
+
+        </tbody>
+      </table>
+
+    </div>
+  </ng-container>
+  </div>
+  <button (click)="navigateTo('menu')" class="regresarbtn" style="width: 200px; position: fixed; bottom: 0; right: 0; z-index: 999; margin-right: 20px;">Regresar</button>
+
+</div>
+
+<app-modal
+  style="align-items: center"
+  [showModal]="showModal"
+  (closeModal)="cancelarEdicion()"
+>
+  <div class="contenido-modal">
+    <input
+      type="text"
+      [ngModel]="pedidosForm.get('usuario')?.value"
+      (ngModelChange)="pedidosForm.get('usuario')?.setValue($event)"
+      name="usuario"
+    />
+
+    <div class="modal-footer">
+      <button
+        mat-icon
+        type="submit"
+        (click)="marcarComoPagado(pedidosForm)"
+        class="save-exit"
+        (click)="showModal = false"
+        [disabled]="pedidosForm.invalid"
+      >
+        <abbr title="Guardar">Imprimir</abbr>
+      </button>
+      <button (click)="cancelarEdicion()" class="close" type="button">
+        Cancelar
+      </button>
+    </div>
+  </div>
+</app-modal>
+
+<app-modal
+  style="align-items: center"
+  [showModal]="modal2Visible"
+  (closeModal)="cancelarEdicion()"
+  (closeModal)="limpiarModal()"
+>
+  <div class="contenido-modal">
+    <div class="form-group">
+      <label for="productosTipo">Tipo Productos:</label>
+      <select
+        id="productosTipo"
+        name="productosTipo"
+        [(ngModel)]="productoTipoSeleccionado"
+        (change)="filtrarProductos(productoTipoSeleccionado)"
+        required
+      >
+        <option
+          *ngFor="let tipo of productosTipo; let first = first"
+          [value]="tipo.id_producto_tipo"
+          [selected]="tipo.id_producto_tipo"
+        >
+          {{ tipo.nombre }}
+        </option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label for="productos">Productos:</label>
+      <select
+        id="productos"
+        name="productos"
+        [(ngModel)]="productoSeleccionado"
+        (change)="DatosProductoPorId(productoSeleccionado)"
+        required
+      >
+        <option *ngFor="let producto of productosMostrar" [value]="producto.id">
+          {{ producto.nombre }} ${{ producto.precio }}
+        </option>
+      </select>
+      <input
+        type="number"
+        id="cantidadProducto"
+        name="cantidadProducto"
+        [(ngModel)]="cantidadProducto"
+        change
+        placeholder="Cantidad"
+        min="1"
+        pattern="^[1-9][0-9]*$"
+        required
+      />
+    </div>
+    <div class="form-group">
+      <label for="productosTipo">Nota:</label>
+      <textarea
+        type="text"
+        style="height: 20%; width: 100%"
+        id="nota"
+        name="nota"
+        [(ngModel)]="notaPedido"
+        placeholder="Nota"
+        class="nota-multiline"
+      ></textarea>
+      <button type="button" (click)="agregarProducto()">
+        Agregar Producto
+      </button>
+    </div>
+    <div class="productos-seleccionados">
+      <h3>Productos Seleccionados</h3>
+      <ul>
+        <li *ngFor="let producto of pedido.productos; let i = index">
+          {{ nombreTipoSeleccionado(producto.id_tipo) }} -
+          {{ producto.nombre }} - Cantidad:
+          {{ producto.cantidad }}
+          <button type="button" (click)="eliminarProducto(i)">Eliminar</button>
+        </li>
+      </ul>
+    </div>
+    <span>{{ pedido.totalPedido | currency }}</span>
+    <div class="modal-footer">
+      <button
+        mat-icon
+        type="submit"
+        (click)="agregarPedido(pedidosForm)"
+        (click)="modal2Visible = false"
+        (click)="limpiarModal()"
+        class="save-exit"
+      >
+        <abbr title="Guardar">Guardar</abbr>
+      </button>
+      <button (click)="cancelarEdicion()" class="close" type="button">
+        Cancelar
+      </button>
+    </div>
+  </div>
+</app-modal>
+
+<!-- Modal para mostrar los detalles del pedido y facturar -->
+<app-modal
+  [showModal]="showModalFacturar"
+  style="align-items: center"
+  (closeModal)="limpiarModal()"
+>
+  <div style="display: block" class="contenido-modal">
+    <h1 class="header">Detalles del Pedido</h1>
+    <hr class="separator" />
+    <div class="pedido-details">
+      <h2>Cliente: {{ pedidosForm.get("nombre_cliente")?.value }}</h2>
+      <h2>Mesa: {{ pedidosForm.get("id_mesa")?.value }}</h2>
+      <div
+        class="detalles-pedido"
+        *ngFor="let detallesPedidoSele of detallesPedidoSeleccionado"
+      >
+        <div>
+          <i class="fa-solid fa-burger"></i>
+          <h3>Producto:</h3>
+        </div>
+        <p><strong>Nombre:</strong> {{ detallesPedidoSele.nombre_producto }}</p>
+        <p><strong>Cantidad:</strong> {{ detallesPedidoSele.cantidad }}</p>
+        <p><strong>Nota:</strong> {{ detallesPedidoSele.nota }}</p>
+        <p><strong>Subtotal:</strong> {{ detallesPedidoSele.subtotal }}</p>
+      </div>
+      <div>
+        <h2>Total: {{ pedidosForm.get("total_pedido")?.value }}</h2>
+        <label style="color: black" for="nequi">Nequi:</label>
+        <input
+          id="nequiInput"
+          style="width: 100%; height: 30px"
+          type="number"
+          min="0"
+          name="nequi"
+          value="0"
+          pattern="^[1-9][0-9]*$"
+          required
+        />
+
+        <label style="color: black" for="bancolombia">Bancolombia:</label>
+        <input
+          id="bancolombiaInput"
+          style="width: 100%; height: 30px"
+          type="number"
+          min="0"
+          name="bancolombia"
+          value="0"
+          pattern="^[1-9][0-9]*$"
+          required
+        />
+
+        <label style="color: black" for="efectivo">Efectivo:</label>
+        <input
+          id="efectivoInput"
+          style="width: 100%; height: 30px"
+          type="number"
+          min="0"
+          name="efectivo"
+          value="0"
+          pattern="^[1-9][0-9]*$"
+          required
+        />
+      </div>
+    </div>
+    <!-- Botones para imprimir y cancelar la factura -->
+    <div class="modal-footer">
+      <button
+        mat-icon
+        type="submit"
+        (click)="imprimirFactura(pedidosForm)"
+        (click)="showModalFacturar = false"
+      >
+        <abbr title="Guardar">Imprimir</abbr>
+      </button>
+      <button (click)="cancelarEdicion()" class="close" type="button">
+        Cancelar
+      </button>
+    </div>
+  </div>
+</app-modal>
+
+<app-modal
+  [showModal]="showModalFacturar2"
+  style="align-items: center"
+  (closeModal)="limpiarModal()"
+>
+  <h2>Total: {{ totalFacturaEditar }}</h2>
+  <label style="color: black" for="nequi">Nequi:</label>
+
+  <input
+    id="nequiInput"
+    style="width: 100%; height: 30px"
+    type="number"
+    name="nequi"
+    value="0"
+    [ngModel]="facturaEditarForm.get('nequi')?.value"
+    (ngModelChange)="facturaEditarForm.get('nequi')?.setValue($event)"
+  />
+
+  <label style="color: black" for="bancolombia">Bancolombia:</label>
+  <input
+    id="bancolombiaInput"
+    style="width: 100%; height: 30px"
+    type="number"
+    name="bancolombia"
+    value="0"
+    [ngModel]="facturaEditarForm.get('bancolombia')?.value"
+    (ngModelChange)="facturaEditarForm.get('bancolombia')?.setValue($event)"
+  />
+
+  <label style="color: black" for="efectivo">Efectivo:</label>
+  <input
+    id="efectivoInput"
+    style="width: 100%; height: 30px"
+    type="number"
+    name="efectivo"
+    value="0"
+    [ngModel]="facturaEditarForm.get('efectivo')?.value"
+    (ngModelChange)="facturaEditarForm.get('efectivo')?.setValue($event)"
+  />
+
+  <div class="modal-footer">
+    <button
+      mat-icon
+      type="submit"
+      (click)="editarPago(facturaEditarForm)"
+      (click)="showModalFacturar2 = false"
+      class="save-exit"
+      (click)="limpiarModal()"
+    >
+      <abbr  title="Guardar">Imprimir</abbr>
+    </button>
+    <button (click)="cancelarEdicion()" class="close" type="button">
+      Cancelar
+    </button>
+  </div>
+</app-modal>

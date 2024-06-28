@@ -1,0 +1,17 @@
+<div class="menu-container">
+  <div class="menu">
+    <button *ngIf="!esEmpleado" (click)="navigateTo('usuarios')">Usuarios</button>
+    <button (click)="navigateTo('clientes')">Clientes</button>
+    <button (click)="navigateTo('pedidos')">Añadir pedido</button>
+    <button (click)="navigateTo('tablapedidos')">Administrar pedidos</button>
+    <button (click)="navigateTo('cocinasMenu')">Cocinas</button>
+    <button *ngIf="!esEmpleado" (click)="navigateTo('productos')">Productos</button>
+    <button *ngIf="!esEmpleado" (click)="navigateTo('mesas')">Mesas</button>
+    <button *ngIf="!esEmpleado" (click)="navigateTo('registros')">Registros</button>
+    <!--<button *ngIf="!esEmpleado" (click)="navigateTo('configuracion')">Configuración</button>-->
+  </div>
+  <div class="bloque" style="margin-left:50%"></div>
+  <div class="content">
+    <button class="button2" (click)="logOut()" style="background: linear-gradient(to left, #fd0101, #ffffff);">Cerrar sesión</button>
+  </div>
+</div>

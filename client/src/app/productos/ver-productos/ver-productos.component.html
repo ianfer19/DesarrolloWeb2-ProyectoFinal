@@ -1,0 +1,51 @@
+<div class="menu-container">
+  <div class="menu">
+    <!-- Menú aquí -->
+  </div>
+  <div style="background-color: black;" class="content">
+    <div class="background-image"></div>
+    <div  class="cliente-form">
+      <table class="user-table">
+      <thead style="background-color: black;">
+        <tr style="color: white;">
+          <th>Nombre</th>
+          <th>Tipo</th>
+          <th>Precio</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr style="height: 30px;" *ngFor="let producto of productos">
+          <td style="background-color: white;">{{ producto.nombre }}</td>
+          <td style="background-color: white;">{{ nombreTipoSeleccionado(producto.id_tipo) }}</td>
+          <td style="background-color: white;">{{ producto.precio }}</td>
+          <td style="display: none;" style="background-color: white; display: none;">{{ producto.id }}</td>
+          <td>
+            <button class="editar-button"  (click)="showModal = true" (click)="editar(producto)">Editar</button>
+          </td>
+          <td>
+            <button class="eliminar-button" (click)="editar(producto)" (click)="eliminarProducto(producto.id)">eliminar</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <button (click)="navigateTo('productos')" class="regresarbtn">Regresar</button>
+  </div>
+</div>
+
+<app-modal [showModal]="showModal" (closeModal)="cancelarEdicion()">
+  <div class="contenido-modal">
+      <!-- Para el enlace de entrada -->
+      <input type="text" [ngModel]="myForm.get('nombre')?.value" (ngModelChange)="myForm.get('nombre')?.setValue($event)" name="nombre">
+      
+      <!-- Campo Tipo -->
+      <input type="text" [ngModel]="myForm.get('precio')?.value" (ngModelChange)="myForm.get('precio')?.setValue($event)" name="precio">
+    <div class="modal-footer">
+      <button mat-icon type="submit" class="save-exit" (click)="editarProducto(myForm)" [disabled]="myForm.invalid">
+        <abbr title="Guardar">Guardar</abbr>
+      </button>
+      <button (click)="cancelarEdicion()" class="close" type="button">
+        Cancelar
+      </button>
+    </div>
+  </div>
+</app-modal>

@@ -1,0 +1,17 @@
+<div class="menu-container">
+  <div class="menu">
+    <button (click)="navigateTo('agregar/cliente')">Agregar Cliente</button>
+    <button *ngIf="!esEmpleado" (click)="navigateTo('administrar/clientes')">
+      Administrar Clientes
+    </button>
+    <button
+      (click)="navigateTo('menu')"
+      style="background: linear-gradient(to left, #fd0101, #ffffff)"
+    >
+      Regresar
+    </button>
+  </div>
+  <div class="content">
+    <!-- Aquí va tu imagen o contenido adicional -->
+  </div>
+</div>
